@@ -1,2 +1,6 @@
-Todo application
------
+#Todo application
+
+*Первое приложение на React.*  
+Использовал централизованную модель данных   
+
+Посмотреть приложение можно [здесь](http://todo.veterg.beget.tech/) 

@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-
 import AppHeader from '../app-header';
 import SearchPanel from '../search-panel';
 import TodoList from '../todo-list';
@@ -65,7 +64,6 @@ export default class App extends Component {
     };
 
     addItem = (text) => {
-        // generate id ?
         const newItem = this.createTodoItem(text);
 
         this.setState(({todoData}) => {
@@ -81,7 +79,6 @@ export default class App extends Component {
             };
         });
     };
-
 
     toggleProperty(arr, id, propName){
         const idx = arr.findIndex((el) => el.id === id);
