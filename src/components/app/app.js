@@ -10,17 +10,33 @@ import './app.css';
 
 export default class App extends Component {
 
-    maxId = 100;
+    maxId = 10;
 
     state = {
         todoData: [
-            this.createTodoItem('Выпить кофе'),
-            this.createTodoItem('Сделать лучшее приложение'),
-            this.createTodoItem('Покушать')
+            this.createTodoItem('Составить список дел')
         ],
         term: '',
         filter: 'all' // active, all, done
     };
+
+    loadTodoData(){
+        const todoData = JSON.parse( localStorage.getItem('todoData') );
+        if (Array.isArray(todoData)){
+            const arrId = todoData.map((todoItem) => todoItem.id);
+            this.maxId = Math.max(...arrId) + 1;
+            this.setState({
+                todoData: todoData
+            });
+        }
+    }
+    saveTodoData(data){
+        localStorage.setItem('todoData', JSON.stringify(data));
+    }
+    componentDidMount(){
+        window.addEventListener("storage", (e) => this.loadTodoData());
+        this.loadTodoData();
+    }
 
     createTodoItem(label){
         return {
@@ -40,6 +56,8 @@ export default class App extends Component {
                 ...todoData.slice(idx + 1)
             ];
 
+            this.saveTodoData(newArray);
+
             return {
                 todoData: newArray
             };
@@ -56,26 +74,16 @@ export default class App extends Component {
                 newItem
             ];
 
+            this.saveTodoData(newArr);
+
             return {
                 todoData: newArr
             };
         });
     };
 
+
     toggleProperty(arr, id, propName){
-        const idx = arr.findIndex((el) => el.id === id);
-
-        const oldItem = arr[idx];
-        const newItem = {...oldItem, [propName]: !oldItem[propName]}
-
-        return [
-            ...arr.slice(0, idx),
-            newItem,
-            ...arr.slice(idx + 1)
-        ];
-    }
-
-    togglePropertyJGedition(arr, id, propName){
         const idx = arr.findIndex((el) => el.id === id);
 
         const newArray = [...arr];
@@ -84,19 +92,17 @@ export default class App extends Component {
         return {
             todoData: newArray
         };
-    }
+    };
 
-    onToggleImportant = (id) => { // Мой вариант
+    onToggleImportant = (id) => {
         this.setState(({todoData}) => {
-            return this.togglePropertyJGedition(todoData, id, 'important');
+            return this.toggleProperty(todoData, id, 'important');
         });
     };
 
-    onToggleDone = (id) => { //Вариант с учебника
+    onToggleDone = (id) => {
         this.setState(({todoData}) => {
-            return {
-                todoData: this.toggleProperty(todoData, id, 'done')
-            };
+            return this.toggleProperty(todoData, id, 'done');
         });
     };
 
