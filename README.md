@@ -1,4 +1,4 @@
-#Todo application
+# Todo application
 
 *Первое приложение на React.*  
 Использовал централизованную модель данных   
