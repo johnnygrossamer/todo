@@ -8,16 +8,14 @@ export default class ItemAddForm extends Component {
         label: ""
     };
 
-    onLabelChange = (e) => { // в e упадет событие
-        //console.log(e.target); // вернет элемент input
-        //console.log(e.target.value); // вернет введенный текст input
+    onLabelChange = (e) => {
         this.setState({
             label: e.target.value
         });
     };
 
     onSubmit = (e) => {
-        e.preventDefault(); // Отменяет действие по умолчанию в данном случае перезагрузку страницы
+        e.preventDefault();
         if(this.state.label.trim() === '') return;
         this.props.onItemAdded(this.state.label);
         this.setState({ label: '' });

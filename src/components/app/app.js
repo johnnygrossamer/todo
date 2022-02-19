@@ -33,7 +33,7 @@ export default class App extends Component {
         localStorage.setItem('todoData', JSON.stringify(data));
     }
     componentDidMount(){
-        window.addEventListener("storage", (e) => this.loadTodoData());
+        window.addEventListener("storage", () => this.loadTodoData());
         this.loadTodoData();
     }
 
